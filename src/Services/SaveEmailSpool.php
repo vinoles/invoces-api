@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use App\Entity\EmailSpool;
 use App\Entity\InvoiceDocument;
 use App\Entity\RetentionDocument;
@@ -11,43 +10,30 @@ use App\Entity\CreditNoteDocument;
 
 class SaveEmailSpool
 {
-
-    private $container;
     private $manager;
 
-    public function __construct(EntityManagerInterface $manager, ContainerInterface $container)
+    public function __construct(EntityManagerInterface $manager)
     {
-        $this->container = $container;
         $this->manager = $manager;
     }
 
     public function saveEmailInvoice($toEmail, $toName = null, $message, $subject, InvoiceDocument $invoiceDocument)
     {
         try {
-           
+
             $email = $this->manager->getRepository('App:EmailSpool')
                 ->findOneBy(array("invoiceDocument" => $invoiceDocument->getId()));
 
-            if (count($email) == 0) {
+            if (!$email) {
                 $email = new EmailSpool();
                 if (!is_null($toName)) {
                     $email->setToName($toName);
                 }
                 $email->setInvoiceDocument($invoiceDocument);
-                $email->setToEmail($toEmail);
-                $email->setStatus(0);
-                $email->setMessage($message);
-                $email->setSubject($subject);
-                $email->setAttempts(0);
-                $this->manager->persist($email);
-            } else {
-                $email->setToEmail($toEmail);
-                $email->setStatus(0);
-                $email->setMessage($message);
-                $email->setSubject($subject);
-                $email->setAttempts(0);
-            }
-            $this->manager->flush();
+                
+            } 
+            $this->saveElement($email, $toEmail, $toName, $message, $subject);
+
         } catch (\Exception $e) {
             echo $e->getMessage();
         }
@@ -57,29 +43,17 @@ class SaveEmailSpool
     {
 
         try {
-            $em = $this->container->get('doctrine')->getManager("default");
+
             $email = $this->manager->getRepository('App:EmailSpool')
                 ->findOneBy(array("retentionDocument" => $retentionDocument->getId()));
-            if (count($email) == 0) {
+            if (!$email) {
                 $email = new EmailSpool();
                 if (!is_null($toName)) {
                     $email->setToName($toName);
                 }
                 $email->setRetentionDocument($retentionDocument);
-                $email->setToEmail($toEmail);
-                $email->setStatus(0);
-                $email->setMessage($message);
-                $email->setSubject($subject);
-                $email->setAttempts(0);
-                $this->manager->persist($email);
-            } else {
-                $email->setToEmail($toEmail);
-                $email->setStatus(0);
-                $email->setMessage($message);
-                $email->setSubject($subject);
-                $email->setAttempts(0);
             }
-            $this->manager->flush();
+            $this->saveElement($email, $toEmail, $toName, $message, $subject);
         } catch (\Exception $e) {
             echo $e->getMessage();
         }
@@ -92,28 +66,27 @@ class SaveEmailSpool
 
             $email = $this->manager->getRepository('App:EmailSpool')
                 ->findOneBy(array("creditNoteDocument" => $creditNoteDocument->getId()));
-            if (count($email) == 0) {
+            if (!$email) {
                 $email = new EmailSpool();
                 if (!is_null($toName)) {
                     $email->setToName($toName);
                 }
                 $email->setCreditNoteDocument($creditNoteDocument);
-                $email->setToEmail($toEmail);
-                $email->setStatus(0);
-                $email->setMessage($message);
-                $email->setSubject($subject);
-                $email->setAttempts(0);
-                $this->manager->persist($email);
-            } else {
-                $email->setToEmail($toEmail);
-                $email->setStatus(0);
-                $email->setMessage($message);
-                $email->setSubject($subject);
-                $email->setAttempts(0);
             }
-            $this->manager->flush();
+            $this->saveElement($email, $toEmail, $toName, $message, $subject);
         } catch (\Exception $e) {
             echo $e->getMessage();
         }
+    }
+
+    private function saveElement(EmailSpool $email, $toEmail, $toName = null, $message, $subject)
+    {
+        $email->setToEmail($toEmail);
+        $email->setStatus(0);
+        $email->setMessage($message);
+        $email->setSubject($subject);
+        $email->setAttempts(0);
+        $this->manager->persist($email);
+        $this->manager->flush();
     }
 }

@@ -20,6 +20,8 @@ class CreateXmlLocalInvoice extends Command
     private $signXmlService;
     private $notificationEmails;
     private $params;
+    private $wsdl = $this->params->get('URL_SRI_RECEPTION_PROD');
+    private $wsdlAuthorization = $this->params->get('URL_SRI_AUTHORIZATION_PROD');
 
     public function __construct(
         EntityManagerInterface $manager,
@@ -97,7 +99,6 @@ class CreateXmlLocalInvoice extends Command
                     $validate = $this->validateVoucherXml($docXml["fileExportContent"], $docXml["passwordAuthorization"], $invoice);
                     if ($validate) {
                         $document = new InvoiceDocument();
-                        //                        $document->setXmlDocumentLocal($docXml["fileExportContent"]);
                         $document->setXmlDocumentLocalName("factura_" . $invoice->getCodeInvoiceExternal() . ".xml");
                         $document->setInvoice($invoice);
                         $invoice->setStatusSri("approved_sri_xml_local_success");
@@ -239,23 +240,15 @@ class CreateXmlLocalInvoice extends Command
     private function validateVoucherXml($docXml, $password, Invoice $invoice)
     {
 
-        /* Open Intanciamos el cliente soap para la recepcion de las facturas */
-        if ($invoice->getCompanyRuc()->getAmbientSri() == 1) {
-            $wsdl = $this->params->get('URL_SRI_RECEPTION_TEST');
-            $wsdlAuthorization = $this->params->get('URL_SRI_AUTHORIZATION_TEST');
-        } else {
-            $wsdl = $this->params->get('URL_SRI_RECEPTION_PROD');
-            $wsdlAuthorization = $this->params->get('URL_SRI_AUTHORIZATION_PROD');
-        }
-        /* close Intanciamos el cliente soap para la recepcion de las facturas */
+        
         $message = "";
         try {
-            $soapClient = new \SoapClient($wsdl, array('trace' => true, 'keep_alive' => false));
+            $soapClient = new \SoapClient($this->wsdl, array('trace' => true, 'keep_alive' => false));
             $conection = $soapClient->validarComprobante(["xml" => $docXml]);
             $status = false;
             if ($conection->RespuestaRecepcionComprobante->estado == "RECIBIDA") {
 
-                $soapClientAuthorization = new \SoapClient($wsdlAuthorization);
+                $soapClientAuthorization = new \SoapClient($this->wsdlAuthorization);
                 $authorization = $soapClientAuthorization->autorizacionComprobante(["claveAccesoComprobante" => trim($password)]);
 
                 $statusMessgeSri = $authorization->RespuestaAutorizacionComprobante->autorizaciones->autorizacion->estado;
