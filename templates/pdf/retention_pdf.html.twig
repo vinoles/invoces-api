@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" >
+    <!-- begin::Head -->
+    <head>
+        <meta charset="utf-8" />
+        <!--begin::Base Styles -->
+        {#        <link href="{{pathToWeb}}/build/app.css" rel="stylesheet" type="text/css" />#}
+        <link href="{{pathToWeb}}/build/css/styles_pdf.css" rel="stylesheet" type="text/css" />
+    </head>
+    <!-- end::Head -->
+    <!-- end::Body -->
+    <body>
+        {%if retention|length> 0 %}
+            <div class="container">
+                <div class="row">
+                    <div class="column-left">
+                        <div id="infotmation_logo">
+                            {%if store.logo is defined %}
+                                <img src="{{pathLogoBranchOffice}}{{store.logo.contentUrl}}" height="170" width="400"/>
+                            {%elseif retention.companyRuc.logo is defined %}
+                                <img src="{{pathLogoCompany}}{{retention.companyRuc.logo.contentUrl}}" height="170" width="400"/>
+                            {%else%}
+                                <img src="{{pathLogoCompanyDefault}}logo_default.jpg" height="170" width="400"/>
+                            {%endif%}
+                        </div>
+                        <div id="infotmation_company">
+                            <div class="row">
+                                <div class="float-left">{{retention.companyBusinessName}}</div>
+                            </div>
+                            <div class="row">
+                                <div class="float-left"><strong>Dirección :</strong> {{retention.matrixAddress}} </div>
+                            </div>
+                            <div class="row">
+                                <div class="float-left">OBLIGADO A LLEVAR CONTABILIDAD ?
+                                    {%if retention.obligedAccountingStatus%}
+                                        <strong>SI</strong>
+                                    {%else%}
+                                        <strong>NO</strong>
+                                    {%endif%}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column-right">
+                        <div id="infotmation_retention">
+
+                            <div class="row">
+                                <div class="float-left"><h4>R.U.C: {{retention.companyRuc.companyRuc}}</h4></div>
+                            </div>
+                            <div class="row">
+                                <div class="center"><h2>RETENCIÓN</h2></div>
+                                <div class="center"><h5>No: {{retention.codeRetentionExternal}}</h5></div>
+                            </div>
+                            <div class="row">
+                                <div class="center">NÚMERO DE AUTORIZACIÓN</div>
+                            </div>
+                            <div class="row">
+                                <div class="center" style="font-size: 14px;">{{retention.numberAuthorizationSri}}</div>
+                            </div>
+                            <div class="row">
+                                <div class="float-left" style="font-size: 14px;">FECHA Y HORA DE AUTORIZACIÓN:</div>
+                                <div class="float-right">{{retention.authorizationDateStart|date('d-m-Y H:i:s')}}</div>
+                            </div>
+                            <div class="row">
+                                <div class="float-left">AMBIENTE: {{retention.ambientSri}}</div>
+                                <div class="float-right"></div>
+                                <div class="float-left">EMISIÓN: NORMAL</div>
+                                <div class="float-right"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="information-client">
+                    <div class="row">
+                        <div class="float-left"><strong>Razón Social / Nombres y Apellidos:</strong> {{retention.providerName }} </div>
+                        <div class="float-right"><strong>Identificación:</strong> {{retention.identificationProvider }} </div>
+                    </div>
+                    <div class="row">
+                        <div class="float-left"><strong>Fecha Emisión:</strong> {{retention.createAtReal|date('d-m-Y') }}</div>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <table id="table-taxes">
+                        <tr>
+                            <th>Ejercicio Fiscal</th>
+                            <th>Cod. Ret.</th>
+                            <th>Impuesto</th> 
+                            <th>Factura</th>
+                            <th>Fecha Factura</th>
+                            <th>% Ret</th> 
+                            <th>Base Imponible</th>
+                            <th>Valor</th>
+                        </tr>
+                        {%for taxe in retention.getTaxes() %}
+                            <tr>
+                                <td style="text-align: right;">{{retention.createAtReal |date('Y')}}</td>
+                                <td style="text-align: right;">{{taxe.codeRetention}}</td>
+                                <td style="text-align: right;">
+                                    {%if taxe.codeTypeSri == 2 %}
+                                        IVA
+                                    {%else%}
+                                        RENTA
+                                    {%endif%}
+                                </td>
+                                <td style="text-align: right;">{{retention.supportDocumentNumber}}</td>
+                                <td style="text-align: right;">{{retention.supportDocumentCreate |date('d-m-Y')}}</td>
+                                <td style="text-align: right;">{{taxe.percentage}}</td> 
+                                <td style="text-align: right;">{{taxe.base}}</td> 
+                                <td style="text-align: right;">{{taxe.total}}</td>
+                                
+                            </tr>
+                        {%endfor%}
+                    </table>
+                </div>
+
+                <div class="row">
+                    <div class="column-left-additional">
+                        <div id="additional-information">
+                            <br>
+                            <div class="row">
+                                <div class="center"> Información Adicional</div>
+                            </div>
+                            <div class="row">
+                                <div class="float-left"><strong>Teléfono: </strong> {{retention.phone}} </div>
+                            </div>
+                            <div class="row">
+                                <div class="float-left"><strong>Dirección :</strong>{{retention.storeAddress}} </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {%else%}
+            No existe el código de la retención
+        {%endif%}
+    </body>
+
+    <!-- end::Body -->
+</html>

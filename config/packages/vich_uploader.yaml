@@ -1,0 +1,15 @@
+vich_uploader:
+    db_driver: orm
+
+    mappings:
+        file_logo_company:
+            uri_prefix: /media
+            upload_destination:  "%kernel.project_dir%/files/company/logo"
+        
+        file_key_company:
+            uri_prefix: /key
+            upload_destination:  "%kernel.project_dir%/files/company/key_sri"
+        
+        file_logo_branch_office:
+            uri_prefix: /branch_office
+            upload_destination:  "%kernel.project_dir%/files/company/logo/branch_office"

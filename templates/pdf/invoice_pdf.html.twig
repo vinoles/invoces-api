@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" >
+    <!-- begin::Head -->
+    <head>
+        <meta charset="utf-8" />
+        <!--begin::Base Styles -->
+        {#        <link href="{{pathToWeb}}/build/app.css" rel="stylesheet" type="text/css" />#}
+        <link href="{{pathToWeb}}/build/css/styles_pdf.css" rel="stylesheet" type="text/css" />
+    </head>
+    <!-- end::Head -->
+    <!-- end::Body -->
+    <body>
+        {%if invoice|length> 0 %}
+            <div class="container">
+                <div class="row">
+                    <div class="column-left">
+                        <div id="infotmation_logo">
+                            {%if store.logo is defined %}
+                                <img src="{{pathLogoBranchOffice}}{{store.logo.contentUrl}}" height="170" width="400"/>
+                            {%elseif invoice.companyRuc.logo is defined %}
+                                <img src="{{pathLogoCompany}}{{invoice.companyRuc.logo.contentUrl}}" height="170" width="400"/>
+                            {%else%}
+                                <img src="{{pathLogoCompanyDefault}}logo_default.jpg" height="170" width="400"/>
+                            {%endif%}
+
+                        </div>
+                        <div id="infotmation_company">
+                            <div class="row">
+                                <div class="float-left">{{invoice.companyBusinessName}}</div>
+                            </div>
+                            <div class="row">
+                                <div class="float-left"><strong>Dirección :</strong> {{invoice.matrixAddress}} </div>
+                            </div>
+                            <div class="row">
+                                <div class="float-left">OBLIGADO A LLEVAR CONTABILIDAD ?
+                                    {%if invoice.obligedAccountingStatus%}
+                                        <strong>SI</strong>
+                                    {%else%}
+                                        <strong>NO</strong>
+                                    {%endif%}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column-right">
+                        <div id="infotmation_invoice">
+
+                            <div class="row">
+                                <div class="float-left"><h4>R.U.C: {{invoice.companyRuc.companyRuc}}</h4></div>
+                            </div>
+                            <div class="row">
+                                <div class="center"><h2>FACTURA</h2></div>
+                                <div class="center"><h5>No: {{invoice.codeInvoiceExternal}}</h5></div>
+                            </div>
+                            <div class="row">
+                                <div class="center">NÚMERO DE AUTORIZACIÓN</div>
+                            </div>
+                            <div class="row">
+                                <div class="center" style="font-size: 14px;">{{invoice.numberAuthorizationSri}}</div>
+                            </div>
+                            <div class="row">
+                                <div class="float-left" style="font-size: 14px;">FECHA Y HORA DE AUTORIZACIÓN:</div>
+                                <div class="float-right">{{invoice.authorizationDateStart|date('d-m-Y H:i:s')}}</div>
+                            </div>
+                            <div class="row">
+                                <div class="float-left">AMBIENTE: {{invoice.ambientSri}}</div>
+                                <div class="float-right"></div>
+                                <div class="float-left">EMISIÓN: NORMAL</div>
+                                <div class="float-right"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" id="information-client">
+                    <div class="row">
+                        <div class="float-left"><strong>Razón Social / Nombres y Apellidos:</strong> {{invoice.clientName }} </div>
+                        <div class="float-right"><strong>Identificación:</strong> {{invoice.identificationClient }} </div>
+                    </div>
+                    <div class="row">
+                        <div class="float-left"><strong>Fecha Emisión:</strong> {{invoice.createAtReal|date('d-m-Y') }}</div>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <table id="table-products">
+                        <tr>
+                            <th style="width:20%;">Cod. Principal </th>
+                            <th style="width:5%;">Cantidad</th> 
+                            <th style="width:45%;">Descripción</th>
+                            <th style="width:10%;">Precio Unitario </th>
+                            <th style="width:10%;">Descuento</th> 
+                            <th style="width:10%;">Precio Total</th>
+                        </tr>
+                        {%for product in invoice.products %}
+                            <tr>
+                                <td>{{product.reference}}</td>
+                                <td>{{product.quantity}}</td> 
+                                <td style="font-size: 10px;">{{product.description}}</td>
+                                <td style="text-align: right;">{{product.pvpUnit|number_format(2, '.', ',')}}</td>
+                                <td style="text-align: right;">{{product.pvpsIndto - product.pvpTotal}}</td> 
+                                <td style="text-align: right;">{{product.pvpTotal|number_format(2, '.', ',')}}</td>
+                            </tr>
+                        {%endfor%}
+                    </table>
+                </div>
+
+                <div class="row">
+                    <div class="column-left-additional">
+                        <div id="additional-information">
+                            <br>
+                            <div class="row">
+                                <div class="center"> Información Adicional</div>
+                            </div>
+                            <div class="row">
+                                <div class="float-left"><strong>Teléfono: </strong> {{invoice.phone}} </div>
+                            </div>
+                            <div class="row">
+                                <div class="float-left"><strong>Dirección :</strong>{{invoice.storeAddress}} </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column-right-price">
+                        <div id="price-details-information">
+                            <table id="table-price">
+                                <tr>
+                                    <td>SUBTOTAL 12% </td> 
+                                    <td style="text-align: right;">{{invoice.totalWithoutTax|number_format(2, '.', ',')}}</td>
+                                </tr>
+                                <tr>
+                                    <td>SUBTOTAL 0% </td> 
+                                    <td style="text-align: right;">0</td>
+                                </tr>
+                                <tr>
+                                    <td>SUBTOTAL SIN IMPUESTOS</td> 
+                                    <td style="text-align: right;">{{invoice.totalWithoutTax|number_format(2, '.', ',')}}</td>
+                                </tr>
+                                <tr>
+                                    <td>IVA 12%</td> 
+                                    <td style="text-align: right;">{{invoice.valueDiscount|number_format(2, '.', ',')}}</td>
+                                </tr>
+                                <tr>
+                                    <td>VALOR TOTAL</td> 
+                                    <td style="text-align: right;">{{invoice.totalAmount|number_format(2, '.', ',')}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="column-left">
+                        <div class="row" id="method-of-payment">
+                            <table id="table-method-of-payment">
+                                <tr>
+                                    <th>Forma de pago </th>
+                                    <th>Efectivo{#{invoice.paymentMethodSri}#}</th> 
+                                </tr>
+                                <tr>
+                                    <td>Efectivo</td> 
+                                    <td>{{invoice.totalAmount|number_format(2, '.', ',')}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="float-left"><strong>Su descuento total es : {{invoice.totalDiscount|number_format(2, '.', ',')}}</strong></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        {%else%}
+            No existe el código de la factura
+        {%endif%}
+    </body>
+
+    <!-- end::Body -->
+</html>

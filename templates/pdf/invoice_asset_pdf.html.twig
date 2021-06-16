@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" >
+    <!-- begin::Head -->
+    <head>
+        <meta charset="utf-8" />
+        <!--begin::Base Styles -->
+        {#        <link href="{{pathToWeb}}/build/app.css" rel="stylesheet" type="text/css" />#}
+        <link href="{{asset('/build/css/styles_pdf.css')}}" rel="stylesheet" type="text/css" />
+    </head>
+    <!-- end::Head -->
+    <!-- end::Body -->
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="column-left">
+                    <div id="infotmation_logo">
+                        <img src="{{asset('/build/images/logo_interactua.d710c64c.png')}}" height="170" width="400"/>
+                    </div>
+                    <div id="infotmation_company">
+                        <div class="row">
+                            <div class="float-left">PROYECTO ERP INTERACTUA</div>
+                        </div>
+                        <div class="row">
+                            <div class="float-left"><strong>Dirección :</strong> Avenida amazonas, con colon </div>
+                        </div>
+                        <div class="row">
+                            <div class="float-left">OBLIGADO A LLEVAR CONTABILIDAD ?<strong>NO</strong></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="column-right">
+                    <div id="infotmation_invoice">
+
+                        <div class="row">
+                            <div class="float-left"><h4>R.U.C: 12121212121</h4></div>
+                        </div>
+                        <div class="row">
+                            <div class="center"><h2>FACTURA</h2></div>
+                            <div class="center"><h5>No: 001-002-123456789</h5></div>
+                        </div>
+                        <div class="row">
+                            <div class="center">NÚMERO DE AUTORIZACIÓN</div>
+                        </div>
+                        <div class="row">
+                            <div class="center">001-002-123456789</div>
+                        </div>
+                        <div class="row">
+                            <div class="float-left">FECHA DE AUTORIZACIÓN :</div>
+                            <div class="float-right">05/07/2018</div>
+                        </div>
+                        <div class="row">
+                            <div class="float-left">FECHA DE CADUCIDAD : </div>
+                            <div class="float-right">05/07/2019</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" id="information-client">
+                <div class="row">
+                    <div class="float-left"><strong>Razón Social / Nombres y Apellidos:</strong> Consumidor Final </div>
+                    <div class="float-right"><strong>Identificación:</strong> 9999999999999 </div>
+                </div>
+                <div class="row">
+                    <div class="float-left"><strong>Fecha Emisión:</strong> 05/07/2019</div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <table id="table-products">
+                    <tr>
+                        <th style="width:20%;">Cod. Principal </th>
+                        <th style="width:5%;">Cantidad</th> 
+                        <th style="width:45%;">Descripción</th>
+                        <th style="width:10%;">Precio Unitario </th>
+                        <th style="width:10%;">Descuento</th> 
+                        <th style="width:10%;">Precio Total</th>
+                    </tr>
+                    <tr>
+                        <td>  YTtuffufv</td>
+                        <td>2</td> 
+                        <td>este es un producto nuevo</td>
+                        <td>45.50</td>
+                        <td>10</td> 
+                        <td>80.50</td>
+                    </tr>
+                    <tr>
+                        <td> ererfufv</td>
+                        <td>2</td> 
+                        <td>este es un producto nuevo</td>
+                        <td>45.50</td>
+                        <td>10</td> 
+                        <td>80.50</td>
+                    </tr>
+                    <tr>
+                        <td> ererfufv</td>
+                        <td>2</td> 
+                        <td>este es un producto nuevo</td>
+                        <td>45.50</td>
+                        <td>10</td> 
+                        <td>80.50</td>
+                    </tr>
+                    <tr>
+                        <td> ererfufv</td>
+                        <td>2</td> 
+                        <td>este es un producto nuevo</td>
+                        <td>45.50</td>
+                        <td>10</td> 
+                        <td>80.50</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="column-left-additional">
+                <div id="additional-information">
+                    <br>
+                    <div class="row">
+                        <div class="center"> Información Adicional</div>
+                    </div>
+                    <div class="row">
+                        <div class="float-left"><strong>Teléfono: </strong> 5354535345 </div>
+                    </div>
+                    <div class="row">
+                        <div class="float-left"><strong>Dirección :</strong> Avenida amazonas, con colon </div>
+                    </div>
+                </div>
+            </div>
+            <div class="column-right-price">
+                <div id="price-details-information">
+                    <table id="table-price">
+                        <tr>
+                            <td>SUBTOTAL 12% </td> 
+                            <td>45.00</td>
+                        </tr>
+                        <tr>
+                            <td>SUBTOTAL 0% </td> 
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>SUBTOTAL SIN IMPUESTOS</td> 
+                            <td>45.00</td>
+                        </tr>
+                        <tr>
+                            <td>IVA 12%</td> 
+                            <td>5.40</td>
+                        </tr>
+                        <tr>
+                            <td>VALOR TOTAL</td> 
+                            <td>180</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="column-left">
+                <div class="row" id="method-of-payment">
+                    <table id="table-method-of-payment">
+                        <tr>
+                            <th>Forma de pago </th>
+                            <th>Valor</th> 
+                        </tr>
+                        <tr>
+                            <td>Efectivo</td> 
+                            <td>180</td>
+                        </tr>
+                    </table>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="float-left"><strong>Su descuento total es : 40.00</strong></div>
+                </div>
+            </div>
+
+        </div>
+    </body>
+
+    <!-- end::Body --></html>

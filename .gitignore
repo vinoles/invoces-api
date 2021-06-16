@@ -1,0 +1,92 @@
+###> symfony/web-server-bundle ###
+/.web-server-pid
+###< symfony/web-server-bundle ###
+/nbproject/private/
+
+# Windows OS image file caches
+Thumbs.db
+ehthumbs.db
+
+# Windows OS Folder config file
+Desktop.ini
+
+# Windows OS Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Windows OS Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# OS X
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# OS X Icon must ends with two \r.
+Icon
+
+# OS X Thumbnails
+._*
+
+# OS X Files that might appear on external disk
+.Spotlight-V100
+.Trashes
+
+# Miscellaneous
+.idea
+*.log
+error_log
+.ftpquota
+*.LCK
+_notes
+.editorconfig
+*.sql
+cgi-bin
+composer.phar
+.user.ini
+php.ini
+nbproject
+
+###> symfony/framework-bundle ###
+.env
+.htaccess
+.user.ini
+php.ini
+/.env
+/.htaccess
+/.user.ini
+/php.ini
+/public/bundles/
+/var/
+/vendor/
+###< symfony/framework-bundle ###
+
+###> symfony/webpack-encore-pack ###
+/node_modules/
+/public/build/
+###< symfony/webpack-encore-pack ###
+
+###> symfony/phpunit-bridge ###
+.phpunit
+/phpunit.xml
+###< symfony/phpunit-bridge ###
+
+###> symfony/web-server-bundle ###
+.web-server-pid
+###< symfony/web-server-bundle ###
+###> lexik/jwt-authentication-bundle ###
+/config/jwt/*.pem
+###< lexik/jwt-authentication-bundle ###
+/src/files/
+/composer.lock
+/symfony.lock
+composer.lock
+symfony.lock
+###> symfony/webpack-encore-bundle ###
+/node_modules/
+/public/build/
+npm-debug.log
+yarn-error.log
+###< symfony/webpack-encore-bundle ###
