@@ -20,8 +20,8 @@ class CreateXmlLocalInvoice extends Command
     private $signXmlService;
     private $notificationEmails;
     private $params;
-    private $wsdl = $this->params->get('URL_SRI_RECEPTION_PROD');
-    private $wsdlAuthorization = $this->params->get('URL_SRI_AUTHORIZATION_PROD');
+    private $wsdl;
+    private $wsdlAuthorization;
 
     public function __construct(
         EntityManagerInterface $manager,
@@ -33,6 +33,8 @@ class CreateXmlLocalInvoice extends Command
         $this->signXmlService = $signXmlService;
         $this->notificationEmails = $notificationEmails;
         $this->params = $params;
+        $this->wsdl = $this->params->get('URL_SRI_RECEPTION_PROD');
+        $this->wsdlAuthorization = $this->params->get('URL_SRI_AUTHORIZATION_PROD');
 
         parent::__construct();
     }
